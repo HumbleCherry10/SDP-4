@@ -90,9 +90,9 @@ public class Main {
         byte[] mixedBytes = AudioMixer.fixAudio(transcodedBytes);
 
         // 6. Direct output file construction with custom naming
-        File customResult = new File("raw_footage_custom_pipeline." + dstCodec.getFormat());
+        File customResult = new File("raw_footage_custom." + dstCodec.getFormat());
 
-        if (customResult.getName().equals("raw_footage_custom_pipeline.mp4") && mixedBytes.length > 0) {
+        if (customResult.getName().equals("raw_footage_custom.mp4") && mixedBytes.length > 0) {
             System.out.println("[PASS] Demo 4 verified: Advanced client executed custom pipeline directly -> "
                     + customResult.getName() + "\n");
             passedChecks++;

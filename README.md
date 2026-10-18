@@ -116,7 +116,7 @@ Student: Dias Tursynbay (SE-2537) | Astana IT University
 [BitrateReader] Reading raw bitstream from: raw_footage.ogg using [Ogg Vorbis / Theora open container compression codec]
 [BitrateReader] Resampling bitrate and transcoding buffer: [ogg] -> [mp4]
 [AudioMixer] Normalizing audio channels, applying gain staging, and mixing stereo track...
-[PASS] Demo 4 verified: Advanced client executed custom pipeline directly -> raw_footage_custom_pipeline.mp4
+[PASS] Demo 4 verified: Advanced client executed custom pipeline directly -> raw_footage_custom.mp4
 
 ======================================================================
 DEMONSTRATION EXECUTION SUMMARY: 4/4 CHECKS PASSED

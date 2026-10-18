@@ -1,0 +1,21 @@
+# IDE / Editor files
+.idea/
+*.iml
+.vscode/
+
+# Build outputs
+out/
+bin/
+target/
+*.class
+
+# OS / temporary files
+.DS_Store
+Thumbs.db
+*.log
+
+# LaTeX build artifacts
+*.aux
+*.fls
+*.fdb_latexmk
+*.synctex.gz

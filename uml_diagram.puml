@@ -1,0 +1,104 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam monochrome false
+skinparam roundcorner 8
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+package "client" {
+  class Main <<Client / Test Harness>> {
+    + {static} main(args: String[]): void
+  }
+}
+
+package "media.facade" {
+  class MediaConversionFacade <<Facade>> {
+    + convertMedia(fileName: String, targetFormat: String): File
+  }
+}
+
+package "media" {
+  class VideoFile <<Domain Entity>> {
+    - name: String
+    - codecType: String
+    - data: byte[]
+    + VideoFile(name: String)
+    + VideoFile(name: String, data: byte[])
+    + getName(): String
+    + getCodecType(): String
+    + getData(): byte[]
+  }
+}
+
+package "media.codecs" {
+  interface Codec <<interface>> {
+    + getFormat(): String
+    + getDescription(): String
+  }
+
+  class MPEG4CompressionCodec {
+    + {static} FORMAT: String = "mp4"
+    + getFormat(): String
+    + getDescription(): String
+  }
+
+  class OggCompressionCodec {
+    + {static} FORMAT: String = "ogg"
+    + getFormat(): String
+    + getDescription(): String
+  }
+}
+
+package "media.subsystem" {
+  class CodecFactory <<Subsystem>> {
+    + {static} extract(file: VideoFile): Codec
+    + {static} getCodec(format: String): Codec
+  }
+
+  class MetadataReader <<Subsystem>> {
+    + {static} readMetadata(file: VideoFile): MediaMetadata
+  }
+
+  class "MetadataReader::MediaMetadata" as MediaMetadata {
+    - title: String
+    - format: String
+    - estimatedDurationSeconds: int
+    - sampleRateHz: int
+    + getTitle(): String
+    + getFormat(): String
+    + getEstimatedDurationSeconds(): int
+    + getSampleRateHz(): int
+    + toString(): String
+  }
+
+  class BitrateReader <<Subsystem>> {
+    + {static} read(file: VideoFile, sourceCodec: Codec): byte[]
+    + {static} convert(buffer: byte[], sourceCodec: Codec, destinationCodec: Codec): byte[]
+  }
+
+  class AudioMixer <<Subsystem>> {
+    + {static} fixAudio(buffer: byte[]): byte[]
+  }
+}
+
+Main ..> MediaConversionFacade : "uses simplified API"
+Main ..> VideoFile : "direct access (advanced client)"
+Main ..> CodecFactory : "direct access (advanced client)"
+
+MediaConversionFacade ..> VideoFile : "creates and wraps"
+MediaConversionFacade ..> MetadataReader : "orchestrates"
+MediaConversionFacade ..> CodecFactory : "orchestrates"
+MediaConversionFacade ..> BitrateReader : "orchestrates"
+MediaConversionFacade ..> AudioMixer : "orchestrates"
+MediaConversionFacade ..> Codec : "references"
+
+CodecFactory ..> Codec : "resolves and creates"
+MPEG4CompressionCodec ..|> Codec
+OggCompressionCodec ..|> Codec
+
+MetadataReader +-- MediaMetadata
+MetadataReader ..> VideoFile : "inspects"
+
+BitrateReader ..> VideoFile : "reads"
+BitrateReader ..> Codec : "reads format"
+@enduml

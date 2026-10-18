@@ -1,0 +1,10 @@
+src/media/VideoFile.java
+src/media/codecs/Codec.java
+src/media/codecs/MPEG4CompressionCodec.java
+src/media/codecs/OggCompressionCodec.java
+src/media/subsystem/MetadataReader.java
+src/media/subsystem/CodecFactory.java
+src/media/subsystem/BitrateReader.java
+src/media/subsystem/AudioMixer.java
+src/media/facade/MediaConversionFacade.java
+src/Main.java
